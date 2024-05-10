@@ -1,0 +1,18 @@
+$primary-color: #ff007a;
+$secondary-color: #00e0ff;
+
+
+/* COLORS */
+
+  .bg_col_prim {
+    background-color: $primary-color;
+  }
+  .bg_col_sec {
+    background-color: $secondary-color;
+  }
+  .text_col_prim {
+    color: $primary-color;
+  }
+  .text_col_sec {
+    color: $secondary-color;
+  }
