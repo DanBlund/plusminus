@@ -3,6 +3,7 @@ import React from 'react'
 import Link from 'next/link'
 import { useState } from 'react'
 import {NewListForm} from "/components/NewListForm" 
+import {ListOfLists} from "/components/ListOfLists" 
 
 const Lists = () => {
   const [lists, setLists] = useState([]) //todos
@@ -22,28 +23,11 @@ const Lists = () => {
     } )
   }
 
-
-
-
-
   return (
     <>
-      <NewListForm addListPropp={addList}/>  {/* addListPropp skickar in funktionen addList till komponenten */}
       <h1>All Lists</h1>
-      <ul className='flex flex-col'>
-        {lists.length === 0 && "No Lists"}  {/* Om lists är top?  && betyder sant då renderas "No Lists" */}
-        {lists.map(list => {
-          return <>
-            <li key={list.id}>
-              <label>
-                <Link className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded' href={`/lists/${list.title}`}>{list.title}</Link>
-              </label>
-              {list.id}
-            <button onClick={() => deleteList(list.id)} className='bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full'>delete</button>
-            </li>
-          </>
-        })}
-      </ul>   
+      <ListOfLists lists={lists} deleteList={deleteList}/>
+      <NewListForm addListPropp={addList}/>  {/* addListPropp skickar in funktionen addList till komponenten */}
     </>
   )
 }
