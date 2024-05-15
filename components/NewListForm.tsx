@@ -1,16 +1,19 @@
 'use client'
 import { useState } from "react"
 import ButtonBig from "./ButtonBig"
+import {INewListForm} from '../app/interfaces' // Använder interface i TYPESCRIPT för att kunna skicka in props
 
-export function NewListForm({addListPropp}) { // Istället för propps destructar vi till {addListPropp}
-
+export const NewListForm: React.FC<INewListForm> = ({func}) => { // Så här måste vi skriva för att ta emot props i TYPESCRIPT
     const [newListName, setNewListName] = useState("") // Sista tomma strängen är startvärdet för useState hooken
 
-    function handleSubmit(e) {
+    // function handleSubmit(e: { preventDefault: () => void }) {   // Vanlig React
+    function handleSubmit(e: { preventDefault: () => void }) {      // TypeScript
+
         e.preventDefault() //Prevent page from refreshing
+
         if (newListName === "") return //Hoppar ur om namnet är tomt
 
-        addListPropp(newListName) // Istället för propps.addListPropp kan vi ta bort propps. för den är destructad
+        func(newListName)
 
         setNewListName("")
       }
@@ -26,7 +29,6 @@ export function NewListForm({addListPropp}) { // Istället för propps destructa
                         type="text" id='item' />
             </div>
             <br/>
-            {/* <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Add New List</button> */}
             <ButtonBig text={"Add"}/>
         </form>
     )

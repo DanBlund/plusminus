@@ -1,12 +1,26 @@
 'use client'
 import React from 'react'
-import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {NewListForm} from "/components/NewListForm" 
 import {ListOfLists} from "/components/ListOfLists" 
 
 const Lists = () => {
-  const [lists, setLists] = useState([]) //todos
+
+                          //  ---=== HOOKS ===---
+
+  const [lists, setLists] = useState(() => { // Initial värde är en funktion
+    const localValue = localStorage.getItem("LISTS")
+    if(localValue == null) return []
+    return JSON.parse(localValue)
+  })
+
+  useEffect(() => { // Utför funktionen varje gång propertyn i andra argumentet ändras (Vilket är [lists] i detta fall)
+    localStorage.setItem("LISTS", JSON.stringify(lists)) // Tar lists och sparar somen Json-string i local storage med namn LIST
+  }, [lists])
+
+
+
+                            //  ---=== FUNCTIONS ===---
 
   function addList(title) {
     setLists(currentLists => {
@@ -23,11 +37,15 @@ const Lists = () => {
     } )
   }
 
+
+  
+                              //  ---=== RETURN JSX ===---
+
   return (
     <>
       <h1>All Lists</h1>
       <ListOfLists lists={lists} deleteList={deleteList}/>
-      <NewListForm addListPropp={addList}/>  {/* addListPropp skickar in funktionen addList till komponenten */}
+      <NewListForm func={addList}/>  {/* addListPropp skickar in funktionen addList till komponenten */}
     </>
   )
 }
