@@ -9,13 +9,13 @@ const Lists = () => {
                           //  ---=== HOOKS ===---
 
   const [lists, setLists] = useState(() => { // Initial värde är en funktion
-    const localValue = localStorage.getItem("LISTS")
+    const localValue = localStorage.getItem("LISTS-LS")
     if(localValue == null) return []
     return JSON.parse(localValue)
   })
 
   useEffect(() => { // Utför funktionen varje gång propertyn i andra argumentet ändras (Vilket är [lists] i detta fall)
-    localStorage.setItem("LISTS", JSON.stringify(lists)) // Tar lists och sparar somen Json-string i local storage med namn LIST
+    localStorage.setItem("LISTS-LS", JSON.stringify(lists)) // Tar lists och sparar somen Json-string i local storage med namn LIST
   }, [lists])
 
 
@@ -26,7 +26,7 @@ const Lists = () => {
     setLists((currentLists: any) => {   // -   "setLists(currentLists => {"   - i vanlig React
       return [
         ...currentLists, // Tar arrayen med listor och lägger till ett objekt som ser ut som det på nästa rad
-        {id: crypto.randomUUID(), title, valueBought: 1, valueSold: 2, itemsBought: 1, itemsSold: 1}, // Alla propps som nya list objektet ska ha
+        {id: crypto.randomUUID(), title, sumBought: 0, sumSold: 0, itemsBought: 0, itemsSold: 0}, // Alla propps som nya list objektet ska ha
       ]
     })
   }

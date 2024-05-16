@@ -10,12 +10,27 @@ export interface IButtonSmall {
     funcParameter?: string;
   }
 
-  export interface IListItem {
+  export interface IListRow {
     list: {
         title: string;
         id: string;
         };
     deleteList(id: string): any;
+  }
+
+  export interface IProductRow {
+    product: IProduct,
+    deleteProduct(id: string): any;
+  }
+
+  export interface IProduct {
+      id: string, 
+      title: string,  
+      priceBought: number, 
+      priceSold: number, 
+      owners: number, 
+      dateBought: number,
+      dateSold: number,
   }
 
   export interface IListOfLists {
@@ -34,4 +49,13 @@ export interface IButtonSmall {
 
   export interface INewListForm {
     func(title: string): any;
+  }
+
+  export interface IAddItemForm {
+    func(
+      title: string,
+      priceBought: number,
+      priceSold: number,
+      owners: number,
+    ): any;
   }
