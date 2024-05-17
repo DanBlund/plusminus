@@ -17,7 +17,7 @@ export const AddItemForm: React.FC<IAddItemForm> = ({func}) => { // Så här må
         if (newItemName === "") return //Hoppar ur om namnet är tomt
         if (newItemOwners < 1) return
         
-          func(newItemName, newItemBought, newItemSold, newItemOwners)
+          func(newItemName, newItemBought, newItemOwners)
 
         setNewItemName(""), setNewItemBought(0), setNewItemSold(0), setNewItemOwners(1)
       }
@@ -47,7 +47,7 @@ export const AddItemForm: React.FC<IAddItemForm> = ({func}) => { // Så här må
                         id='itemOwners' type='number'
                         value={newItemOwners}  //Value vär är samma som newList variabeln i useState hooken ovanför
                         onChange={e => setNewItemOwners(Number(e.target.value))} // e = event object. Sätter newList variabel till värdet efter varje knapptryckning
-                        placeholder="Price"/>
+                />
             </div>
             <br/>
             <ButtonBig text={"Add"}/>

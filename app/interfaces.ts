@@ -20,7 +20,8 @@ export interface IButtonSmall {
 
   export interface IProductRow {
     product: IProduct,
-    deleteProduct(id: string): any;
+    deleteProduct(id: string): any,
+    openSell(id: string): any,
   }
 
   export interface IProduct {
@@ -55,7 +56,11 @@ export interface IButtonSmall {
     func(
       title: string,
       priceBought: number,
-      priceSold: number,
       owners: number,
     ): any;
   }
+
+  export interface ISellItemForm {
+    func(priceSold: number): any;
+  }
+  

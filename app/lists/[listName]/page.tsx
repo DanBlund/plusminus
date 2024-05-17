@@ -2,13 +2,21 @@
 import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import {AddItemForm} from "../../../components/AddItemForm"
+import {AddItemForm} from "@/components/AddItemForm"
 import { ProductRow } from '@/components/ProductRow'
 import { IProduct } from '@/app/interfaces'
+import { SellItemForm } from '@/components/SellItemForm'
 
 const ListPage = ({params}: {params: {listName: string}}) => {
 
-                  //  ---=== HOOKS ===---
+
+
+
+                            //  ---=== HOOKS ===---
+
+  const [sellModalOpen, setSellModalOpen] = useState(false);
+  // const [priceSold, setPriceSold] = useState(0)
+  const [currentItem, setCurrentItem] = useState("")
 
   const [product, setProduct] = useState(() => { // Initial värde är en funktion
     const localValue = localStorage.getItem(params.listName.toUpperCase())
@@ -21,18 +29,43 @@ const ListPage = ({params}: {params: {listName: string}}) => {
   }, [params.listName, product])
 
 
+
+
+
                               //  ---=== FUNCTIONS ===---
 
-  function addItem(title: string, priceBought: number, priceSold: number, owners: number) { // dateBought: Date, dateSold: Date
+  function addItem(title: string, priceBought: number, owners: number) { // dateBought: Date, dateSold: Date
     setProduct((currentValues: any) => {   // -   "setLists(currentLists => {"   - i vanlig React
 
       const dateBought = Date.now()
       
       return [
         ...currentValues, // Tar arrayen med listor och lägger till ett objekt som ser ut som det på nästa rad
-        {id: crypto.randomUUID(), title, priceBought, priceSold, owners, dateBought }, // Alla propps som nya list objektet ska ha
+        {id: crypto.randomUUID(), title, priceBought, owners, dateBought }, // Alla propps som nya list objektet ska ha
       ]
     })
+  }
+
+  function switchSellModal(id: string) { // dateBought: Date, dateSold: Date
+    setCurrentItem(id)
+    setSellModalOpen(!sellModalOpen)
+    return 
+  }
+
+
+  function sellProduct(priceSold: number) { 
+    setProduct((currentValues: any) => {  
+
+      var index = currentValues.findIndex((obj: { id: string }) => obj.id === currentItem);
+      
+      currentValues[index].dateSold = Date.now()
+      currentValues[index].priceSold = priceSold
+
+      return [
+        ...currentValues
+      ]
+    })
+    setSellModalOpen(false), setCurrentItem("")
   }
 
   function deleteProduct(id: string) {
@@ -42,6 +75,14 @@ const ListPage = ({params}: {params: {listName: string}}) => {
   }
 
   
+
+
+
+
+
+
+
+
     return (
       <>
         <h1>{params.listName}</h1>
@@ -78,7 +119,7 @@ const ListPage = ({params}: {params: {listName: string}}) => {
             <tbody>
               {product.map((item: IProduct) => {
                 return <>
-                  <ProductRow product={item} deleteProduct={deleteProduct}/>
+                  <ProductRow product={item} deleteProduct={deleteProduct} openSell={switchSellModal}/>
                 </>
               })} 
             </tbody>
@@ -86,6 +127,10 @@ const ListPage = ({params}: {params: {listName: string}}) => {
         </div>
         <br></br>
         <AddItemForm func={addItem}/>
+
+        <div className={`bg-slate-600/90 w-full flex justify-center items-center h-dvh ${sellModalOpen ? 'fixed' : 'hidden'}`}>
+          <SellItemForm func={sellProduct}/>
+        </div> 
       </>
     )
 }
