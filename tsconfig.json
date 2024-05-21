@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/lists/[listName]/page.tsx", "app/lists/page.jsxx", "components/NewListForm.jsxx", "components/ButtonBig.tsx", "components/ButtonSmall.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/lists/[listName]/page.tsx", "app/lists/page.jsxx", "components/NewListForm.jsxx", "components/ButtonBig.tsx", "components/ButtonSmall.tsx", "components/DeleteItem.tsxx"],
   "exclude": ["node_modules"]
 }
