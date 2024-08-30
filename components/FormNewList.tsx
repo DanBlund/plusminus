@@ -11,7 +11,7 @@ const FormNewList: React.FC<{dispatch: any}> = ({dispatch}) => {
         e.preventDefault() // Hindrar att sidan uppdateras vid input
         if(name.length < 1) return
         
-        dispatch({type: ACTIONS.ADD_LIST, payload: {name: name, id: crypto.randomUUID()}}) // Payload är ett object som skickar med alla variabler vi behöver för att utföra ACTION
+        dispatch({type: ACTIONS.ADD_TO_LIST, payload: {name: name, id: crypto.randomUUID()}}) // Payload är ett object som skickar med alla variabler vi behöver för att utföra ACTION
         setName('')
       }
 
